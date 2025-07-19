@@ -5,7 +5,7 @@
  *  Author: GAGHL
  */ 
 
-#define F_CPU 8000000UL
+#define F_CPU 9600000UL
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -13,18 +13,74 @@
 #include "GAGHL_AVR_NEOPIXEL.h"
 
 // Customize these macros for your LED port/pin
-#define LED_PORT PORTC
-#define LED_DDR DDRC
+#define LED_PORT PORTB
+#define LED_DDR DDRB
 #define LED_PIN 0
 
 uint8_t neopixel_buffer[NEOPIXEL_MAX_LEDS * 3];
 uint8_t neopixel_rawBuffer[NEOPIXEL_MAX_LEDS * 3];
 static uint8_t neopixel_brightness = 255;
 
-void neopixel_init(void) {
-	LED_DDR |= (1 << LED_PIN);
-	LED_PORT &= ~(1 << LED_PIN);
+#ifdef __AVR_ATtiny13A__
+
+void neopixel_display(void) {
+	
+	cli();
+
+	for (uint16_t i = 0; i < (NEOPIXEL_MAX_LEDS * 3); i++) {
+		
+		uint16_t scaled = ((uint16_t)neopixel_rawBuffer[i] * neopixel_brightness) / 255;
+		uint8_t byte = (uint8_t)scaled;
+
+		
+		for (uint8_t b = 0; b < 8; b++) {
+			if (byte & 0x80) {
+				// Send bit '1' (HIGH ~0.729us, LOW ~0.625us)
+				asm volatile (
+				"sbi %[port], %[pin]\n\t"   // HIGH (2 clk)
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"cbi %[port], %[pin]\n\t"   // LOW (2 clk)
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				:
+				: [port] "I" (_SFR_IO_ADDR(LED_PORT)),
+				[pin] "I" (LED_PIN)
+				);
+				} else {
+				// Send bit '0' (HIGH ~0.416us, LOW ~0.833us)
+				asm volatile (
+				"sbi %[port], %[pin]\n\t"   // HIGH (2 clk)
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"cbi %[port], %[pin]\n\t"   // LOW (2 clk)
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				:
+				: [port] "I" (_SFR_IO_ADDR(LED_PORT)),
+				[pin] "I" (LED_PIN)
+				);
+			}
+			byte <<= 1;
+		}
+	}
+
+	sei();
+
+	_delay_us(50);
 }
+
+#else
 
 void neopixel_display(void) {
 	uint8_t temp[NEOPIXEL_MAX_LEDS * 3];
@@ -33,6 +89,62 @@ void neopixel_display(void) {
 		temp[i] = (uint8_t)scaled;
 	}
 	neopixel_send(temp, sizeof(temp));
+}
+
+void neopixel_send(uint8_t *data, uint8_t length) {
+	cli();
+
+	for (uint8_t i = 0; i < length; i++) {
+		uint8_t byte = data[i];
+		for (uint8_t b = 0; b < 8; b++) {
+			if (byte & 0x80) {
+				// Send bit '1' (HIGH ~0.8us, LOW ~0.45us)
+				asm volatile (
+				"sbi %[port], %[pin]\n\t"   // HIGH (2 clk)
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"cbi %[port], %[pin]\n\t"   // LOW (2 clk)
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				:
+				: [port] "I" (_SFR_IO_ADDR(LED_PORT)),
+				[pin] "I" (LED_PIN)
+				);
+				} else {
+				// Send bit '0' (HIGH ~0.4us, LOW ~0.85us)
+				asm volatile (
+				"sbi %[port], %[pin]\n\t"   // HIGH (2 clk)
+				"nop\n\t"                   // 1 clk
+				"cbi %[port], %[pin]\n\t"   // LOW (2 clk)
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				"nop\n\t"                   // 1 clk
+				:
+				: [port] "I" (_SFR_IO_ADDR(LED_PORT)),
+				[pin] "I" (LED_PIN)
+				);
+			}
+			byte <<= 1;
+		}
+	}
+
+	sei();
+
+	_delay_us(50);
+}
+
+#endif
+
+void neopixel_init(void) {
+	LED_DDR |= (1 << LED_PIN);
+	LED_PORT &= ~(1 << LED_PIN);
 }
 
 void neopixel_setBrightness(uint8_t brightness) {
@@ -84,52 +196,4 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 		wheel(pos, &r, &g, &b);
 		neopixel_setPixel(i, r, g, b);
 	}
-}
-
-void neopixel_send(uint8_t *data, uint8_t length) {
-	cli();
-
-	for (uint8_t i = 0; i < length; i++) {
-		uint8_t byte = data[i];
-		for (uint8_t b = 0; b < 8; b++) {
-			if (byte & 0x80) {
-				// Send bit '1' (HIGH ~0.8us, LOW ~0.45us)
-				asm volatile (
-				"sbi %[port], %[pin]\n\t"   // HIGH (2 clk)
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"cbi %[port], %[pin]\n\t"   // LOW (2 clk)
-				"nop\n\t"                   // 1 clk
-				:
-				: [port] "I" (_SFR_IO_ADDR(LED_PORT)),
-				[pin] "I" (LED_PIN)
-				);
-				} else {
-				// Send bit '0' (HIGH ~0.4us, LOW ~0.85us)
-				asm volatile (
-				"sbi %[port], %[pin]\n\t"   // HIGH (2 clk)
-				"nop\n\t"                   // 1 clk
-				"cbi %[port], %[pin]\n\t"   // LOW (2 clk)
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				"nop\n\t"                   // 1 clk
-				:
-				: [port] "I" (_SFR_IO_ADDR(LED_PORT)),
-				[pin] "I" (LED_PIN)
-				);
-			}
-			byte <<= 1;
-		}
-	}
-
-	sei();
-
-	_delay_us(50);
 }

@@ -20,7 +20,7 @@
  * 
  * This value defines the size of the internal buffer used for color data.
  */
-#define NEOPIXEL_MAX_LEDS 10
+#define NEOPIXEL_MAX_LEDS 16
 
 /**
  * @var neopixel_buffer
