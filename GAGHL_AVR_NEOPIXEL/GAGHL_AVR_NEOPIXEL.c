@@ -5,8 +5,6 @@
  *  Author: GAGHL
  */ 
 
-#define F_CPU 8000000UL
-
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -17,7 +15,6 @@
 #define LED_DDR DDRB
 #define LED_PIN 0
 
-uint8_t neopixel_buffer[NEOPIXEL_MAX_LEDS * 3];
 uint8_t neopixel_rawBuffer[NEOPIXEL_MAX_LEDS * 3];
 static uint8_t neopixel_brightness = 255;
 
@@ -29,7 +26,7 @@ void neopixel_display(void) {
 
 	for (uint16_t i = 0; i < (NEOPIXEL_MAX_LEDS * 3); i++) {
 		
-		uint16_t scaled = ((uint16_t)neopixel_rawBuffer[i] * neopixel_brightness) / 255;
+		uint16_t scaled = ((uint16_t)neopixel_rawBuffer[i] * neopixel_brightness) >> 8;
 		uint8_t byte = (uint8_t)scaled;
 
 		
@@ -85,7 +82,7 @@ void neopixel_display(void) {
 void neopixel_display(void) {
 	uint8_t temp[NEOPIXEL_MAX_LEDS * 3];
 	for (uint8_t i = 0; i < sizeof(neopixel_rawBuffer); i++) {
-		uint16_t scaled = ((uint16_t)neopixel_rawBuffer[i] * neopixel_brightness) / 255;
+		uint16_t scaled = ((uint16_t)neopixel_rawBuffer[i] * neopixel_brightness) >> 8;
 		temp[i] = (uint8_t)scaled;
 	}
 	neopixel_send(temp, sizeof(temp));
@@ -196,5 +193,4 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 		wheel(pos, &r, &g, &b);
 		neopixel_setPixel(i, r, g, b);
 	}
-
 }
