@@ -51,7 +51,7 @@ You can customize the following macros in the .c file:
 ```
 
 
-### 3. Example
+### 3. Example 1
 ```c
 #define F_CPU 8000000UL
 
@@ -84,7 +84,7 @@ int main(void) {
 
 ```
 
-### 3. Example
+### 3. Example 2
 ```c
 #define F_CPU 8000000UL
 
