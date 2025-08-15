@@ -84,11 +84,35 @@ int main(void) {
 
 ```
 
+### 3. Example
+```c
+#define F_CPU 8000000UL
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include "GAGHL_AVR_NEOPIXEL.h"
+
+int main(void) {
+	neopixel_init();
+	neopixel_setBrightness(255);
+
+	while (1) {
+		for(uint8_t i = 0 ; i < 255 ; i++){
+			neopixel_rainbow(i, 0);
+			neopixel_display();
+			_delay_ms(10);
+			neopixel_setBrightness(20);
+		}
+	}
+}
+
+```
+
 ## Wiring
 ```c
-MCU PIN -----------------> DIN on first WS2812B
-+5V ---------------------> VCC
-GND ---------------------> GND
+MCU PIN ---------------------> DIN on first WS2812B
+	+5V ---------------------> VCC
+	GND ---------------------> GND
 ```
 ⚠️ Make sure you use a 100nF capacitor near the LED and optionally a resistor (≈330Ω) in series with the DIN line
 
