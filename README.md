@@ -110,9 +110,9 @@ int main(void) {
 
 ## Wiring
 ```c
-MCU PIN ---------------------> DIN on first WS2812B
-	+5V ---------------------> VCC
-	GND ---------------------> GND
+MCU PIN -----------------> DIN on first WS2812B
++5V ---------------------> VCC
+GND ---------------------> GND
 ```
 ⚠️ Make sure you use a 100nF capacitor near the LED and optionally a resistor (≈330Ω) in series with the DIN line
 
