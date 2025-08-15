@@ -5,7 +5,7 @@
  *  Author: GAGHL
  */ 
 
-#define F_CPU 9600000UL
+#define F_CPU 8000000UL
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -196,4 +196,5 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 		wheel(pos, &r, &g, &b);
 		neopixel_setPixel(i, r, g, b);
 	}
+
 }
