@@ -15,7 +15,7 @@ Designed for bare-metal AVR development using register-level code and precise bi
 - ✅ Automatic `display()` after color/buffer updates
 - ✅ Simple C-style API
 - ✅ Customizable Port and Pin macros
-- ✅ Optimized for 8MHz clock with inline assembly
+- ✅ Optimized for 8MHz and 9.6MHz clock with inline assembly
 
 ## 📚 API Overview
 
