@@ -19,16 +19,16 @@ Designed for bare-metal AVR development using register-level code and precise bi
 
 ## 📚 API Overview
 
-| Function                   | Parameters                        | Description                                                         |
-| -------------------------- | --------------------------------- | ------------------------------------------------------------------- |
-| `neopixel_init()`          | *(void)*                          | Initializes the LED port/pin and clears the LED buffer              |
-| `neopixel_send()`          | `uint8_t *data, uint8_t length`   | Sends raw data to the LED strip (used internally by `display()`)    |
-| `neopixel_display()`       | *(void)*                          | Sends the current buffer (`neopixel_buffer`) to the LED strip       |
-| `neopixel_clear()`         | *(void)*                          | Sets all pixels in the buffer to black (off)                        |
-| `neopixel_setPixel()`      | `uint8_t index, uint8_t r, g, b`  | Sets the RGB color of the pixel at given index                      |
-| `neopixel_setBrightness()` | `uint8_t brightness`              | Applies a global brightness scaling (0–255) to all pixel data       |
-| `neopixel_rainbow()`       | `uint8_t offset, uint8_t spacing` | Fills the buffer with a rainbow gradient starting at offset         |
-| `neopixel_shift()`         | `int8_t amount`                   | Shifts the LED buffer left/right by `amount` positions (circularly) |
+| Function                   | Parameters                       				 | Description                                                         |
+| -------------------------- | ------------------------------------------------- | ------------------------------------------------------------------- |
+| `neopixel_init()`          | *(void)*                          				 | Initializes the LED port/pin and clears the LED buffer              |
+| `neopixel_send()`          | `uint8_t *data, uint8_t length`   				 | Sends raw data to the LED strip (used internally by `display()`)    |
+| `neopixel_display()`       | *(void)*                          				 | Sends the current buffer (`neopixel_buffer`) to the LED strip       |
+| `neopixel_clear()`         | *(void)*                          				 | Sets all pixels in the buffer to black (off)                        |
+| `neopixel_setPixel()`      | `uint8_t index, uint8_t r, uint8_t g, uint8_t b`  | Sets the RGB color of the pixel at given index                      |
+| `neopixel_setBrightness()` | `uint8_t brightness`             				 | Applies a global brightness scaling (0–255) to all pixel data       |
+| `neopixel_rainbow()`       | `uint8_t offset, uint8_t spacing`				 | Fills the buffer with a rainbow gradient starting at offset         |
+| `neopixel_shift()`         | `int8_t amount`                  				 | Shifts the LED buffer left/right by `amount` positions (circularly) |
 
 
 ## 🚀 Getting Started
