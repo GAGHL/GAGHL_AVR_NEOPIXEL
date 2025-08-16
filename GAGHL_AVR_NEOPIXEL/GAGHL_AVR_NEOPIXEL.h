@@ -23,12 +23,12 @@
 #define NEOPIXEL_MAX_LEDS 16
 
 /**
- * @var neopixel_buffer
- * @brief Internal data buffer (size: NEOPIXEL_MAX_LEDS * 3) for LED color values.
+ * @var neopixel_rawBuffer
+ * @brief Internal data rawBuffer (size: NEOPIXEL_MAX_LEDS * 3) for LED color values.
  * 
- * Each LED requires 3 bytes (R, G, B). This buffer is used during transmission.
+ * Each LED requires 3 bytes (R, G, B). This rawBuffer is used during transmission.
  */
-extern uint8_t neopixel_buffer[NEOPIXEL_MAX_LEDS * 3];
+extern uint8_t neopixel_rawBuffer[NEOPIXEL_MAX_LEDS * 3];
 
 /**
  * @brief Initializes the NeoPixel output pin.
