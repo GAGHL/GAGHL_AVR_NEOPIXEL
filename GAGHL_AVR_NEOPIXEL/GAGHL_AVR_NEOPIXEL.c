@@ -145,7 +145,6 @@ void neopixel_init(void) {
 }
 
 void neopixel_setBrightness(uint8_t brightness) {
-	if (brightness > 255) brightness = 255;
 	neopixel_brightness = brightness;
 }
 
@@ -193,4 +192,5 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 		wheel(pos, &r, &g, &b);
 		neopixel_setPixel(i, r, g, b);
 	}
+
 }
