@@ -190,6 +190,6 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 		wheel(pos, &r, &g, &b);
 		neopixel_setPixel(i, r, g, b);
 	}
-
 }
+
 
