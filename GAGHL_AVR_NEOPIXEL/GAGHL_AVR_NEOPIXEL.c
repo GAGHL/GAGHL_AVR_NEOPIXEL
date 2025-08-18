@@ -5,7 +5,6 @@
  *  Author: GAGHL
  */ 
 
-#include <avr/interrupt.h>
 #include "GAGHL_AVR_NEOPIXEL.h"
 
 // Customize these macros for your LED port/pin
@@ -191,6 +190,3 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 		neopixel_setPixel(i, r, g, b);
 	}
 }
-
-
-
