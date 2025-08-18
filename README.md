@@ -12,7 +12,6 @@ Designed for bare-metal AVR development using register-level code and precise bi
 - ✅ Supports up to **85** WS2812B LEDs (configurable)
 - ✅ Built-in `rainbow()` animation function
 - ✅ Global brightness control
-- ✅ Automatic `display()` after color/buffer updates
 - ✅ Simple C-style API
 - ✅ Customizable Port and Pin macros
 - ✅ Optimized for 8MHz and 9.6MHz clock with inline assembly
