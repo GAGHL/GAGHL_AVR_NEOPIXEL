@@ -12,7 +12,7 @@
 #define LED_DDR DDRB
 #define LED_PIN 0
 
-uint8_t neopixel_rawBuffer[NEOPIXEL_MAX_LEDS * 3];
+uint8_t neopixel_rawBuffer[NEOPIXEL_BUFFER_SIZE];
 static uint8_t neopixel_brightness = 255;
 
 #ifdef __AVR_ATtiny13A__
@@ -21,7 +21,7 @@ void neopixel_display(void) {
 	
 	cli();
 
-	for (uint16_t i = 0; i < (NEOPIXEL_MAX_LEDS * 3); i++) {
+	for (uint16_t i = 0; i < NEOPIXEL_BUFFER_SIZE; i++) {
 		
 		uint16_t scaled = ((uint16_t)neopixel_rawBuffer[i] * neopixel_brightness) >> 8;
 		uint8_t byte = (uint8_t)scaled;
@@ -77,12 +77,12 @@ void neopixel_display(void) {
 #else
 
 void neopixel_display(void) {
-	uint8_t temp[NEOPIXEL_MAX_LEDS * 3];
-	for (uint8_t i = 0; i < sizeof(neopixel_rawBuffer); i++) {
+	uint8_t temp[NEOPIXEL_BUFFER_SIZE];
+	for (uint8_t i = 0; i < NEOPIXEL_BUFFER_SIZE; i++) {
 		uint16_t scaled = ((uint16_t)neopixel_rawBuffer[i] * neopixel_brightness) >> 8;
 		temp[i] = (uint8_t)scaled;
 	}
-	neopixel_send(temp, sizeof(temp));
+	neopixel_send(temp, NEOPIXEL_BUFFER_SIZE);
 }
 
 void neopixel_send(uint8_t *data, uint8_t length) {
@@ -146,7 +146,7 @@ void neopixel_setBrightness(uint8_t brightness) {
 }
 
 void neopixel_clear(void) {
-	for (uint8_t i = 0; i < sizeof(neopixel_rawBuffer); i++) {
+	for (uint8_t i = 0; i < NEOPIXEL_BUFFER_SIZE; i++) {
 		neopixel_rawBuffer[i] = 0;
 	}
 }

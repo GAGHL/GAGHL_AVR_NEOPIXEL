@@ -25,6 +25,8 @@
  */
 #define NEOPIXEL_MAX_LEDS 12
 
+#define NEOPIXEL_BUFFER_SIZE (NEOPIXEL_MAX_LEDS * 3)
+
 /**
  * @var neopixel_rawBuffer
  * @brief Internal data rawBuffer (size: NEOPIXEL_MAX_LEDS * 3) for LED color values.
@@ -68,23 +70,23 @@ void neopixel_clear(void);
  * @brief Sets the RGB color of a specific LED in the strip.
  * 
  * @param index Index of the LED (0-based).
- * @param r Red component (0–255).
- * @param g Green component (0–255).
- * @param b Blue component (0–255).
+ * @param r Red component (0�255).
+ * @param g Green component (0�255).
+ * @param b Blue component (0�255).
  */
 void neopixel_setPixel(uint8_t index, uint8_t r, uint8_t g, uint8_t b);
 
 /**
  * @brief Sets the global brightness level for all LEDs.
  * 
- * @param brightness Brightness value (0–255). Affects all LEDs during `neopixel_display()`.
+ * @param brightness Brightness value (0�255). Affects all LEDs during `neopixel_display()`.
  */
 void neopixel_setBrightness(uint8_t brightness);
 
 /**
  * @brief Displays a rainbow gradient across the LED strip.
  * 
- * @param offset Hue offset for animation (0–255).
+ * @param offset Hue offset for animation (0�255).
  * @param spacing Distance between hues (lower = faster color change).
  */
 void neopixel_rainbow(uint8_t offset, uint8_t spacing);
