@@ -5,8 +5,6 @@
  *  Author: GAGHL
  */ 
 
-#include <avr/io.h>
-#include <util/delay.h>
 #include <avr/interrupt.h>
 #include "GAGHL_AVR_NEOPIXEL.h"
 
@@ -194,3 +192,4 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 	}
 
 }
+
