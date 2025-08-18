@@ -12,24 +12,10 @@
 #ifndef GAGHL_AVR_NEOPIXEL_H_
 #define GAGHL_AVR_NEOPIXEL_H_
 
+#include "CONFIG.h"
 #include <stdint.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
-
-#if defined(__AVR_ATtiny13__) || defined(__AVR_ATtiny13A__)
-
-#ifndef F_CPU
-	#define F_CPU 9600000UL
-	#warning "F_CPU is not defined! Default value will be used."
-#endif
-
-#else // If MCU is not ATtiny13 or ATtiny13A
-
-#ifndef F_CPU
-	#define F_CPU 8000000UL
-	#warning "F_CPU is not defined! Default value will be used."
-#endif
-
-#endif // defined(__AVR_ATtiny13__) || defined(__AVR_ATtiny13A__)
 
 /**
  * @def NEOPIXEL_MAX_LEDS
@@ -37,15 +23,15 @@
  * 
  * This value defines the size of the internal buffer used for color data.
  */
-#define NEOPIXEL_MAX_LEDS 28
+#define NEOPIXEL_MAX_LEDS 12
 
 /**
- * @var neopixel_buffer
- * @brief Internal data buffer (size: NEOPIXEL_MAX_LEDS * 3) for LED color values.
+ * @var neopixel_rawBuffer
+ * @brief Internal data rawBuffer (size: NEOPIXEL_MAX_LEDS * 3) for LED color values.
  * 
  * Each LED requires 3 bytes (R, G, B). This buffer is used during transmission.
  */
-extern uint8_t neopixel_buffer[NEOPIXEL_MAX_LEDS * 3];
+extern uint8_t neopixel_rawBuffer[NEOPIXEL_MAX_LEDS * 3];
 
 /**
  * @brief Initializes the NeoPixel output pin.
