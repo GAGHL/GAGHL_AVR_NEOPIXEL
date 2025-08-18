@@ -12,7 +12,7 @@
 #ifndef GAGHL_AVR_NEOPIXEL_H_
 #define GAGHL_AVR_NEOPIXEL_H_
 
-#include "CONFIG.h"
+#include "GAGHL_AVR_NEOPIXEL_CONFIG.h"
 #include <stdint.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
