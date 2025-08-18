@@ -64,20 +64,20 @@ int main(void) {
 	neopixel_setBrightness(255);
 
 	while (1) {
-		for (uint8_t i = 0; i < 10; i++) {
+		for (uint8_t i = 0; i < 10 ; i++) {
 			neopixel_setPixel(i, 255, 0, 0); // Red
-			_delay_ms(100);
 			neopixel_display();
+			_delay_ms(100);
 		}
 		for (uint8_t i = 0; i < 10; i++) {
 			neopixel_setPixel(i, 0, 255, 0); // Green
-			_delay_ms(100);
 			neopixel_display();
+			_delay_ms(100);
 		}
 		for (uint8_t i = 0; i < 10; i++) {
 			neopixel_setPixel(i, 0, 0, 255); // Blue
-			_delay_ms(100);
 			neopixel_display();
+			_delay_ms(100);
 		}
 	}
 }
@@ -99,9 +99,9 @@ int main(void) {
 	while (1) {
 		for(uint8_t i = 0 ; i < 255 ; i++){
 			neopixel_rainbow(i, 0);
+			neopixel_setBrightness(20);
 			neopixel_display();
 			_delay_ms(10);
-			neopixel_setBrightness(20);
 		}
 	}
 }
