@@ -167,12 +167,12 @@ static void wheel(uint8_t pos, uint8_t *r, uint8_t *g, uint8_t *b) {
 		*r = 255 - pos * 3;
 		*g = 0;
 		*b = pos * 3;
-		} else if (pos < 170) {
+	} else if (pos < 170) {
 		pos -= 85;
 		*r = 0;
 		*g = pos * 3;
 		*b = 255 - pos * 3;
-		} else {
+	} else {
 		pos -= 170;
 		*r = pos * 3;
 		*g = 255 - pos * 3;
@@ -191,5 +191,6 @@ void neopixel_rainbow(uint8_t offset, uint8_t spacing) {
 		neopixel_setPixel(i, r, g, b);
 	}
 }
+
 
 
