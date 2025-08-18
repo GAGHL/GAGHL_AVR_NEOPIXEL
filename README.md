@@ -38,6 +38,7 @@ Copy these files into your AVR project:
 
 - `GAGHL_AVR_NEOPIXEL.c`
 - `GAGHL_AVR_NEOPIXEL.h`
+- `GAGHL_AVR_NEOPIXEL_CONFIG.h`
 
 ### 2. Configuration
 
