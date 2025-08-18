@@ -19,12 +19,14 @@
 
 #ifndef F_CPU
 	#define F_CPU 9600000UL
+	#warning "F_CPU is not defined! Default value will be used."
 #endif
 
 #else // If MCU is not ATtiny13 or ATtiny13A
 
 #ifndef F_CPU
 	#define F_CPU 8000000UL
+	#warning "F_CPU is not defined! Default value will be used."
 #endif
 
 #endif // defined(__AVR_ATtiny13__) || defined(__AVR_ATtiny13A__)
