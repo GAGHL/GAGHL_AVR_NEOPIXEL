@@ -13,6 +13,7 @@
 #define GAGHL_AVR_NEOPIXEL_H_
 
 #include <stdint.h>
+#include <util/delay.h>
 
 /**
  * @def NEOPIXEL_MAX_LEDS
